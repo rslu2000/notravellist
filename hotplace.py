@@ -68,7 +68,7 @@ def listToExcel(list,name):
 	df.to_excel(name + '景点信息.xlsx')
 
 def getBaiduGeo(sightlist,name):
-	ak = '你的百度密钥'
+	ak = 'UAedX6ygGjGzZ1n7g2vkn6XpLUxCKCNc'
 	headers = {
 	'User-Agent' :'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'
 	}
