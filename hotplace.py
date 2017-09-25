@@ -33,7 +33,7 @@ def getList():
 	url = 'http://piao.qunar.com/ticket/list.htm?keyword='+ str(place) +'&region=&from=mpl_search_suggest&page={}'
 	i = 1
 	sightlist = []
-	while i < 300:
+	while i < 10:
 		page = getPage(url.format(i))
 		selector = etree.HTML(page)
 		print '正在爬取第' + str(i) + '页景点信息'
