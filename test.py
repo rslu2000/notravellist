@@ -11,29 +11,23 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-def getPage(url):#获取链接中的网页内容
+def getPage(url):#获取链接中的网页内容    test.py這隻程式 拿掉了原版的異常處理的部份
     headers = {
        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
     }
-    try:
-        request = urllib2.Request(url = url, headers = headers)
-        response = urllib2.urlopen(request, timeout = 5)
-        page = response.read().decode('utf-8')
-        return page
-    except (urllib2.URLError,Exception), e:
-        if hasattr(e, 'reason'):
-            print '抓取失败，具体原因：', e.reason
-            request = urllib2.Request(url = url, headers = headers)
-            response = urllib2.urlopen(request,timeout = 5)
-            page = response.read().decode('utf-8')
-            return page
+    
+    request = urllib2.Request(url = url, headers = headers)
+    response = urllib2.urlopen(request, timeout = 5)
+    page = response.read().decode('utf-8')
+    return page
+
 
 def getList():
 	place = raw_input('请输入想搜索的区域、类型(如北京、热门景点等)：')
 	url = 'http://piao.qunar.com/ticket/list.htm?keyword='+ str(place) +'&region=&from=mpl_search_suggest&page={}'
 	i = 1
 	sightlist = []
-	while i < 10:
+	while i < 4:
 		page = getPage(url.format(i))
                 print url.format(i)
                 print page

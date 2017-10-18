@@ -11,36 +11,25 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-def getPage(url):#获取链接中的网页内容
-    headers = {
-       'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
-    }
-    try:
-        request = urllib2.Request(url = url, headers = headers)
-        response = urllib2.urlopen(request, timeout = 5)
-        page = response.read().decode('utf-8')
-        return page
-    except (urllib2.URLError,Exception), e:
-        if hasattr(e, 'reason'):
-            print '抓取失败，具体原因：', e.reason
-            request = urllib2.Request(url = url, headers = headers)
-            response = urllib2.urlopen(request,timeout = 5)
-            page = response.read().decode('utf-8')
-            return page
+def getPage(url):       #获取链接中的网页内容  test02.py之中拿掉header及異常處理程序的部分
+    request = urllib2.Request(url = url)
+    response = urllib2.urlopen(request, timeout = 5)
+    page = response.read().decode('utf-8')
+    return page
 
 def getList():
 	place = raw_input('请输入想搜索的区域、类型(如北京、热门景点等)：')
 	url = 'http://piao.qunar.com/ticket/list.htm?keyword='+ str(place) +'&region=&from=mpl_search_suggest&page={}'
 	i = 1
 	sightlist = []
-	while i < 10:
+	while i < 2:
 		page = getPage(url.format(i))
                 print url.format(i)
-                print page
 		selector = etree.HTML(page)
 		print '正在爬取第' + str(i) + '页景点信息'
 		i+=1
 		informations = selector.xpath('//div[@class="result_list"]/div')
+                print informations 
 		for inf in informations: #获取必要信息
 			sight_name = inf.xpath('./div/div/h3/a/text()')[0]
 			sight_level = inf.xpath('.//span[@class="level"]/text()')
@@ -119,8 +108,8 @@ def getBaiduGeo(sightlist,name):
 
 def main():
 	sightlist,place = getList()
-	listToExcel(sightlist,place)
-	getBaiduGeo(sightlist,place)
+	#listToExcel(sightlist,place)
+	#getBaiduGeo(sightlist,place)
 
 if __name__=='__main__':
 	main()
